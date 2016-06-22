@@ -1,0 +1,54 @@
+<dom-module id="fsn-fblogin-button">
+  <template>
+    <style>
+      button {
+        padding: 20px 20px 20px 10px;
+        border:none;
+        color: #FFF;
+        text-decoration: none;
+        text-transform: uppercase;
+        background: #3b5998;
+        font-weight: 600;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+      }
+
+      .iron-icon {
+        margin: 0 10px;
+        font-size: 1.3em;
+        vertical-align: middle;
+      }
+    </style>
+
+    <app-location path="{{path}}"></app-location>
+    <button on-tap='login'><iron-icon icon='fsn:facebook'></iron-icon> Sign up with facebook</button>
+
+  </template>
+</dom-module>
+
+<script>
+  require('@polymer/polymer/polymer.html');
+  require('@polymer/app-route/app-location.html');
+  require('@polymer/iron-icon/iron-icon.html');
+
+  require('@andreasgalster/fsn-icons/fsn-icons.html');
+
+  Polymer({
+    is: 'fsn-fblogin-button',
+    properties: {
+      redirectTo: String,
+    },
+    login: function() {
+      Meteor.loginWithFacebook({
+        requestPermissions: ['public_profile','user_about_me','user_birthday']
+      }, (err) => {
+        if (err) {
+          throw new Meteor.Error("Facebook login failed");
+        } else {
+          mixpanel.track("usersSignedUp");
+          this.path = '/' + this.redirectTo;
+        }
+      });
+    }
+  });
+</script>
