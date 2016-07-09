@@ -20,8 +20,9 @@
       }
     </style>
 
-    <app-location path={{path}}></app-location>
+    <app-location path=[[path]]></app-location>
     <button on-tap='login'><iron-icon icon='fsn:facebook'></iron-icon> Sign up with facebook</button>
+
 
   </template>
 </dom-module>
@@ -43,11 +44,14 @@
         requestPermissions: ['public_profile','user_about_me','user_birthday']
       }, (err) => {
         if (err) {
-          mixpanel.track('userSignupError');
-          throw new Meteor.Error('Facebook login failed');
+          if(Meteor.isProduction) {
+            mixpanel.track('userSignupError');
+          }
         } else {
-          mixpanel.track('userSignupSuccessful');
-          this.path = '/' + this.redirectTo;
+          if(Meteor.isProduction) {
+            mixpanel.track('userSignupSuccessful');
+          }
+          this.path = `/${this.redirectTo}`;
         }
       });
     }
