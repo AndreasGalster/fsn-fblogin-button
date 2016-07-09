@@ -42,16 +42,16 @@
       'tap': 'login'
     },
     login: function() {
-      alert('yo terence are you seeing this?');
-      console.log('yo terence are you seeing this?');
+      // alert('yo terence are you seeing this?');
+      // console.log('yo terence are you seeing this?');
       mixpanel.track('userSignupClick');
       Meteor.loginWithFacebook({
         requestPermissions: ['public_profile','user_about_me','user_birthday']
       }, (err) => {
         if (err) {
-          alert('yo terence are you seeing this?');
-          alert(err);
-          console.log(err);
+          // alert('yo terence are you seeing this?');
+          // alert(err);
+          // console.log(err);
           if(Meteor.isProduction) {
             mixpanel.track('userSignupError');
           }
