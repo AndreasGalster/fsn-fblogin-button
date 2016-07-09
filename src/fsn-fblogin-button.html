@@ -21,8 +21,7 @@
     </style>
 
     <app-location path=[[path]]></app-location>
-    <button on-tap='login'><iron-icon icon='fsn:facebook'></iron-icon> Sign up with facebook</button>
-
+    <button><iron-icon icon='fsn:facebook'></iron-icon> Sign up with facebook</button>
 
   </template>
 </dom-module>
@@ -38,6 +37,9 @@
     is: 'fsn-fblogin-button',
     properties: {
       redirectTo: String,
+    },
+    listeners: {
+      'tap': 'login'
     },
     login: function() {
       mixpanel.track('userSignupClick');
